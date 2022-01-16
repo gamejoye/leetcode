@@ -38,4 +38,5 @@ return i;
 }
  
 //pratice ovo
+//pratic 1 uou
 
