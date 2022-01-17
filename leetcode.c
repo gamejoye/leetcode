@@ -56,3 +56,55 @@ dp[4][i]=(dp[2][i-1]+dp[3][i-1])%mod;
 }
 return (dp[4][n-1]+dp[3][n-1]+dp[2][n-1]+dp[1][n-1]+dp[0][n-1])%mod;
 }
+
+//735. 小行星(中等)(不懂力扣所以做了比较久吧)
+int* asteroidCollision(int* asteroids, int asteroidsSize, int* returnSize){
+int i,j,k,flag=-1;
+*returnSize = 0;
+int *stack = (int *)malloc(sizeof(int) * asteroidsSize);
+for(i=0;i<asteroidsSize;i++)
+{
+    if(asteroids[i]>0)
+    flag=i;
+    if(asteroids[i]<0)
+    {
+        if(flag>-1&&asteroids[flag]!=0)
+        {
+            if(asteroids[flag]==-asteroids[i])
+            {
+                asteroids[i]=asteroids[flag]=0;
+                for(k=flag;k>=0;k--)
+                {
+                    if(asteroids[k]>0)
+                    {
+                        flag=k;
+                        break;
+                    }
+                }
+            }
+            else if(asteroids[flag]<-asteroids[i])
+            {
+                asteroids[flag]=0;
+                for(k=flag;k>=0;k--)
+                {
+                    if(asteroids[k]>0)
+                    {
+                        flag=k;
+                        break;
+                    }
+                }
+                i--;
+            }
+            else
+            asteroids[i]=0;
+        }
+    }
+}
+for(i=0,j=0;i<asteroidsSize;i++)
+if(asteroids[i]!=0)
+stack[j++]=asteroids[i];
+*returnSize=j;
+return stack;
+}
+
+
