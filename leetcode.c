@@ -57,7 +57,11 @@ dp[4][i]=(dp[2][i-1]+dp[3][i-1])%mod;
 return (dp[4][n-1]+dp[3][n-1]+dp[2][n-1]+dp[1][n-1]+dp[0][n-1])%mod;
 }
 
+<<<<<<< HEAD
 //735. 小行星(中等)(不懂力扣所以做了比较久吧)
+=======
+//037. 小行星(中等)(不懂力扣所以做了比较久吧)
+>>>>>>> origin/master
 int* asteroidCollision(int* asteroids, int asteroidsSize, int* returnSize){
 int i,j,k,flag=-1;
 *returnSize = 0;
