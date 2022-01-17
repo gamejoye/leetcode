@@ -40,6 +40,7 @@ return i;
 //pratice ovo
 //pratic 1 uou
 //pratice 2 qaq
+
 //1220.统计原因字序列数目(困难)（动态规划）
 int countVowelPermutation(int n){
     long long mod = 1e9 + 7;
