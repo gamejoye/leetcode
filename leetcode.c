@@ -145,3 +145,31 @@ for(i=3;i<numsSize;i++)
 dp1[i]=Max(dp1[i-2]+nums[i],dp1[i-1]);
 return Max(dp[i-2],dp1[i-1]);
 }
+
+//730.删除并获得点数(中等)（动态规划）（跟打家劫舍差不多，不过我很难以理解）
+#define Max(a,b) (a>b)?a:b
+int deleteAndEarn(int* nums, int numsSize){
+int i,j,k,count=0,max_=0;
+int sum[20001]={0},dp[20001];
+for(i=0;i<numsSize;i++)
+{
+    if(nums[i]!=0)
+    {
+    if(max_<=nums[i])
+    max_=nums[i];
+    count=1;
+    for(j=0;j<numsSize;j++)
+    if(nums[i]==nums[j]&&i!=j)
+    {
+        count++;
+        nums[j]=0;
+    }
+    sum[nums[i]]=nums[i]*count;
+    }
+}
+dp[1]=sum[1];
+dp[2]=Max(sum[1],sum[2]);
+for(i=3;i<=max_;i++)
+dp[i]=Max(dp[i-1],dp[i-2]+sum[i]);
+return dp[max_];
+}
