@@ -210,3 +210,216 @@ for(i=0;i<j;)
 }
 return a;
 }
+
+
+//679.24点(困难)
+bool judgePoint24(int* cards, int cardsSize){
+    float operate(float a,float b,char ch);
+    float expression_5(float a,float b,float c,float d,char ch,char ck,char cl);
+    float expression_4(float a,float b,float c,float d,char ch,char ck,char cl);
+    float expression_3(float a,float b,float c,float d,char ch,char ck,char cl);
+    float expression_2(float a,float b,float c,float d,char ch,char ck,char cl);
+    float expression_1(float a,float b,float c,float d,char ch,char ck,char cl);
+    char op_[4]={'+','-','*','/'};
+    float a,b,c,d;
+    float res,core[4];
+    int t,flag,i,j,k,l,n,m,o;
+    core[0]=cards[0];
+    core[1]=cards[1];
+    core[2]=cards[2];
+    core[3]=cards[3];
+        flag=0;
+        for(l=0;l<4;l++)
+        for(n=0;n<4;n++)
+        for(m=0;m<4;m++)
+        for(o=0;o<4;o++)
+        {
+            a=core[l];
+            if(n!=l)
+            b=core[n];
+            else
+            continue;
+            if(m!=n&&m!=l)
+            c=core[m];
+            else
+            continue;
+            if(o!=l&&o!=n&&o!=m)
+            d=core[o];
+            else
+            continue;
+        for(i=0;i<4;i++)
+        for(j=0;j<4;j++)
+        for(k=0;k<4;k++)
+        {
+            res=expression_1(a,b,c,d,op_[i],op_[j],op_[k]);
+            if(res-24>=-0.01&&res-24<=0.01)
+            return true;
+            res=expression_2(a,b,c,d,op_[i],op_[j],op_[k]);
+            if(res-24>=-0.01&&res-24<=0.01)
+            return true;
+            res=expression_3(a,b,c,d,op_[i],op_[j],op_[k]);
+            if(res-24>=-0.01&&res-24<=0.01)
+            return true;
+            res=expression_4(a,b,c,d,op_[i],op_[j],op_[k]);
+            if(res-24>=-0.01&&res-24<=0.01)
+            return true;
+            res=expression_5(a,b,c,d,op_[i],op_[j],op_[k]);
+            if(res-24>=-0.01&&res-24<=0.01)
+            return true;
+        }
+        }
+        return false;
+}
+float operate(float a,float b,char ch)
+{
+    if(ch=='+')
+    return a+b;
+    else if(ch=='-')
+    return a-b;
+    else if(ch=='*')
+    return a*b;
+    else if(ch=='/'&&b!=0)
+    return a/b;
+    else
+    return 0;
+}
+float expression_5(float a,float b,float c,float d,char ch,char ck,char cl)
+{
+    float res=0;
+    res=operate(c,d,cl);
+    res=operate(b,res,ck);
+    res=operate(a,res,ch);
+    return res;
+}
+float expression_4(float a,float b,float c,float d,char ch,char ck,char cl)
+{
+    float res=0;
+    res=operate(b,c,ck);
+    res=operate(res,d,cl);
+    res=operate(a,res,ch);
+    return res;
+}
+float expression_3(float a,float b,float c,float d,char ch,char ck,char cl)
+{
+    float res=0,ret=0;
+    res=operate(a,b,ch);
+    ret=operate(c,d,cl);
+    res=operate(res,ret,ck);
+    return res;
+}
+float expression_2(float a,float b,float c,float d,char ch,char ck,char cl)
+{
+    float res=0;
+    res=operate(a,b,ch);
+    res=operate(res,c,ck);
+    res=operate(res,d,cl);
+    return res;
+}
+float expression_1(float a,float b,float c,float d,char ch,char ck,char cl)
+{
+    float res=0;
+    res=operate(b,c,ck);
+    res=operate(a,res,ch);
+    res=operate(res,d,cl);
+    return res;
+}
+
+//509.(简单)
+int fib(int n){
+if(n==0||n==1)
+return n;
+else
+return fib(n-1)+fib(n-2);
+}
+
+//1137.（简单）
+int tribonacci(int n){
+    int i,a[38]={0,1,1},sum=2;
+    if(n==0)return 0;
+    if(n==1||n==2)return 1;
+for(i=3;i<=n;i++)
+a[i]=a[i-1]+a[i-2]+a[i-3];
+return a[i-1];
+}
+
+//70.(简单)
+int arrange(int m,int n)
+{
+    if(m==0)
+    return 1;
+    long i,j,k=1,ways=1;
+    for(i=n;k<=m;i--,k++)
+    ways=i*ways/k;
+    return ways;
+}
+int climbStairs(int n){
+int i,j,m,sum=0;
+m=n/2;
+for(i=0;i<=m;i++)
+sum=sum+arrange(i,n-i);
+return sum;
+}
+
+//746.(最小话费爬楼梯)（动态规划）
+int minCostClimbingStairs(int* cost, int costSize){
+int dp[1001]={0},i,j,k;
+for(i=2;i<=costSize;i++)
+dp[i]=fmin(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+return dp[i-1];
+}
+
+//55.跳棋(中等)
+bool canJump(int* nums, int numsSize){
+int i,j,k,d,step=1,max;
+if(nums[0]==0)
+{
+    if(numsSize>1)
+return false;
+else
+return true;
+}
+for(i=0;i<numsSize-1;)
+{
+    if(nums[i]+i>=numsSize-1)
+    break;
+    max=-1;
+    for(j=i+1;j<=i+nums[i]&&j<numsSize;j++)
+    {
+        if(nums[j]+j>=max)
+        {
+            max=nums[j]+j;
+            d=j;
+        }
+    }
+    i=d;
+    step++;
+    if(step>=100001)
+    return false;
+}
+    return true;
+}
+
+//45.跳棋(中等)
+int jump(int* nums, int numsSize){
+int i,j,k,d,step=1,max;
+if(numsSize==1||0)
+return 0;
+for(i=0;i<numsSize-1;)
+{
+    if(nums[i]+i>=numsSize-1)
+    break;
+    max=-1;
+    for(j=i+1;j<=i+nums[i]&&j<numsSize;j++)
+    {
+        if(nums[j]+j>=max)
+        {
+            max=nums[j]+j;
+            d=j;
+        }
+    }
+    i=d;
+    step++;
+}
+return step;
+}
+
