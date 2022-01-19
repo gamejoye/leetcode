@@ -192,3 +192,21 @@ for(i=0,j=numsSize-1;i<j;)
 }
 return nums;
 }
+
+//167.两数之和II（简单）（双指针）
+int* twoSum(int* numbers, int numbersSize, int target, int* returnSize){
+int i,j=numbersSize-1;
+int* a = (int*)malloc(sizeof(int) * 2);
+*returnSize=2;
+for(i=0;i<j;)
+{
+    if(numbers[i]+numbers[j]==target)
+    {
+        a[0]=i+1;
+        a[1]=j+1;
+        break;
+    }
+    (numbers[i]+numbers[j]>target)?j--:i++;
+}
+return a;
+}
