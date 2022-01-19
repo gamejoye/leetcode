@@ -107,5 +107,41 @@ stack[j++]=asteroids[i];
 return stack;
 }
 
+//198.打家劫舍I(中等)（动态规划）
+#define Max(a,b) (a>b)?a:b
+int rob(int* nums, int numsSize){
+int *dp= (int*)malloc(sizeof(int)*numsSize);
+if(numsSize==1)
+return nums[0];
+if(numsSize==2)
+return Max(nums[0],nums[1]);
+dp[0]=nums[0];
+dp[1]=Max(nums[1],nums[0]);
+int i;
+for(i=2;i<numsSize;i++)
+dp[i]=Max(dp[i-2]+nums[i],dp[i-1]);
+return dp[i-1];
+}
 
-11
+//213.打家劫舍II(中等)（动态规划）(围成一个环，注意分类)
+#define Max(a,b) (a>b)?a:b
+int rob(int* nums, int numsSize){
+int *dp= (int*)malloc(sizeof(int)*numsSize);
+int *dp1= (int*)malloc(sizeof(int)*numsSize);
+if(numsSize==1)
+return nums[0];
+if(numsSize==2)
+return Max(nums[0],nums[1]);
+if(numsSize==3)
+return Max(Max(nums[0],nums[1]),nums[2]);
+dp[0]=nums[0];
+dp[1]=Max(nums[1],nums[0]);
+dp1[1]=nums[1];
+dp1[2]=Max(nums[1],nums[2]);
+int i;
+for(i=2;i<numsSize-1;i++)
+dp[i]=Max(dp[i-2]+nums[i],dp[i-1]);
+for(i=3;i<numsSize;i++)
+dp1[i]=Max(dp1[i-2]+nums[i],dp1[i-1]);
+return Max(dp[i-2],dp1[i-1]);
+}
