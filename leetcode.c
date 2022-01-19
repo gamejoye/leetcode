@@ -423,3 +423,24 @@ for(i=0;i<numsSize-1;)
 return step;
 }
 
+//477.汉明(中等)（很巧我很喜欢）
+int totalHammingDistance(int* nums, int numsSize){
+int count=0,d=0,k,i,j,n=0;
+while(1)
+{
+n=0;
+d=0;
+for(i=0;i<numsSize;i++)
+{
+    if(nums[i]&1==1)
+    n++;
+    if(nums[i]!=0)
+    d=1;
+    nums[i]>>=1;
+}
+count=count+n*(numsSize-n);
+if(d==0)
+break;
+}
+return count;
+}
