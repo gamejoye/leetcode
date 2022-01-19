@@ -173,3 +173,22 @@ for(i=3;i<=max_;i++)
 dp[i]=Max(dp[i-1],dp[i-2]+sum[i]);
 return dp[max_];
 }
+
+
+//289.移动零(简单)（我个人挺喜欢这个做法）
+void moveZeroes(int* nums, int numsSize){
+int i,j;
+for(i=0,j=numsSize-1;i<j;)
+{
+    if(nums[i]==0)
+    {
+        for(k=i;k<j;k++)
+        nums[k]=nums[k+1];
+        nums[j]=0;
+        j--;
+    }
+    if(nums[i]!=0)
+    i++;
+}
+return nums;
+}
