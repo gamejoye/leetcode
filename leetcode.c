@@ -1,42 +1,3 @@
-
-//704.二分查找（简单）
-int search(int* nums, int numsSize, int target){
-int i,j;
-for(i=0,j=numsSize-1;i<=j;i++,j--)
-{
-    if(nums[i]==target)
-    return i;
-    else if(nums[j]==target)
-    return j;
-    else if(nums[i]!=target&&nums[j]!=target)
-    continue;
-    else
-    return;
-}
-return -1;
-}
-
-//35.搜索插入位置(简单)
-int searchInsert(int* nums, int numsSize, int target){
-int i,j;
-for(i=0,j=numsSize-1;i<=j;i++,j--)
-{
-    if(nums[0]>target)
-    return 0;
-    if(nums[numsSize-1]<target)
-    return numsSize;
-    if(nums[i]>target)
-    return i;
-    if(nums[j]<target)
-    return j+1;
-    if(nums[i]==target)
-    return i;
-    if(nums[j]==target)
-    return j;
-}
-return i;
-}
- 
 //pratice ovo
 //pratic 1 uou
 //pratice 2 qaq
@@ -193,24 +154,6 @@ for(i=0,j=numsSize-1;i<j;)
 return nums;
 }
 
-//167.两数之和II（简单）（双指针）
-int* twoSum(int* numbers, int numbersSize, int target, int* returnSize){
-int i,j=numbersSize-1;
-int* a = (int*)malloc(sizeof(int) * 2);
-*returnSize=2;
-for(i=0;i<j;)
-{
-    if(numbers[i]+numbers[j]==target)
-    {
-        a[0]=i+1;
-        a[1]=j+1;
-        break;
-    }
-    (numbers[i]+numbers[j]>target)?j--:i++;
-}
-return a;
-}
-
 
 //679.24点(困难)
 bool judgePoint24(int* cards, int cardsSize){
@@ -324,43 +267,8 @@ float expression_1(float a,float b,float c,float d,char ch,char ck,char cl)
     return res;
 }
 
-//509.(简单)
-int fib(int n){
-if(n==0||n==1)
-return n;
-else
-return fib(n-1)+fib(n-2);
-}
 
-//1137.（简单）
-int tribonacci(int n){
-    int i,a[38]={0,1,1},sum=2;
-    if(n==0)return 0;
-    if(n==1||n==2)return 1;
-for(i=3;i<=n;i++)
-a[i]=a[i-1]+a[i-2]+a[i-3];
-return a[i-1];
-}
-
-//70.(简单)
-int arrange(int m,int n)
-{
-    if(m==0)
-    return 1;
-    long i,j,k=1,ways=1;
-    for(i=n;k<=m;i--,k++)
-    ways=i*ways/k;
-    return ways;
-}
-int climbStairs(int n){
-int i,j,m,sum=0;
-m=n/2;
-for(i=0;i<=m;i++)
-sum=sum+arrange(i,n-i);
-return sum;
-}
-
-//746.(最小话费爬楼梯)（动态规划）
+//746.(最小花费爬楼梯)（动态规划）
 int minCostClimbingStairs(int* cost, int costSize){
 int dp[1001]={0},i,j,k;
 for(i=2;i<=costSize;i++)
@@ -444,3 +352,42 @@ break;
 }
 return count;
 }
+
+
+//53.最大子数组和(简单)(实际很难)
+int maxSubArray(int* nums, int numsSize){
+int max,dp,i;
+max=dp=nums[0];
+for(i=1;i<numsSize;i++){
+dp=fmax(dp+nums[i],nums[i]);
+max=fmax(dp,max);
+}
+return max;
+}
+
+//918.环形数组的最大子数组和(中等)(很巧妙)
+/*
+ 注:如果最大子数组出现在中间，则做法和53题一样；
+    如果最大子数组出现在两侧，则用total-最小子数组和(巧妙且骚);
+ */
+int maxSubarraySumCircular(int* nums, int numsSize){
+int max=INT_MIN,min=INT_MAX,count=0,i,j;
+int dp,dk,total=0;
+if(numsSize==1)
+return nums[0];
+max=min=total=dp=dk=nums[0];
+for(i=1;i<numsSize;i++)
+{
+    dp=fmax(dp+nums[i],nums[i]);
+    max=fmax(dp,max);
+    dk=fmin(dk+nums[i],nums[i]);
+    min=fmin(dk,min);
+    total=total+nums[i];
+}
+if(max<0)
+return max;
+else
+return fmax(max,total-min);
+}
+
+
