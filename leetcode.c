@@ -391,3 +391,62 @@ return fmax(max,total-min);
 }
 
 
+//15.三数之和(中等)（排序+双重循环过，如果三重循环超时）（一部分指针的声明参考题解）
+int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes){
+    int i,j,k,l=0,min,count,sum;
+    int **ans = (int **)malloc(sizeof(int *) * numsSize  *numsSize);
+    *returnColumnSizes = (int *)malloc(sizeof(int) * numsSize * numsSize);
+    *returnSize=0;
+    if(numsSize<3)
+    return returnColumnSizes;
+    for(i=0;i<numsSize;i++)
+    {
+    min=100000;
+    for(j=i;j<numsSize;j++)
+    {
+    if(nums[j]<=min)
+    {
+        min=nums[j];
+        k=j;
+    }
+    }
+    count=nums[i];
+    nums[i]=min;
+    nums[k]=count;
+    }
+    for(i=0;i<numsSize-2;i++)
+    {
+        for(j=i+1,k=numsSize-1;j<k;)
+        {
+                sum=nums[i]+nums[j]+nums[k];
+                if(sum==0)
+                {
+                ans[*returnSize] = (int*)malloc(sizeof(int)*3);
+                (*returnColumnSizes)[*returnSize] = 3;
+                ans[*returnSize][0] = nums[k];
+                ans[*returnSize][1] = nums[i];
+                ans[*returnSize][2] = nums[j];
+                *returnSize += 1;
+                for(;;j++)
+                {
+                    if(j+2>=numsSize||nums[j]!=nums[j+1])
+                    {
+                        j++;
+                        break;
+                    }
+                }
+                }
+                else if(sum<0)
+                j++;
+                else
+                k--;
+        }
+        for(;;i++)
+        {
+            if(i+3>=numsSize||nums[i]!=nums[i+1])
+            break;
+        }
+    }
+    return ans;
+}
+
