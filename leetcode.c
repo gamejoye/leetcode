@@ -570,3 +570,27 @@ for(i=1;i<pricesSize;i++)
 }
 return sum;
 }
+
+//695.岛屿的最大面积(搜索深度遍历dfs)
+//第一次做这种题
+int fun(int** grid, int gridSize, int* gridColSize,int i,int j){
+if(i<0||i>=gridSize||j<0||j>=gridColSize[0]||grid[i][j]==0)
+return 0;
+grid[i][j]=0;
+return 1+
+fun(grid,gridSize,gridColSize,i+1,j)+
+fun(grid,gridSize,gridColSize,i-1,j)+
+fun(grid,gridSize,gridColSize,i,j+1)+
+fun(grid,gridSize,gridColSize,i,j-1);
+}
+int maxAreaOfIsland(int** grid, int gridSize, int* gridColSize){
+int max=0,ans,i,j;
+for(i=0;i<gridSize;i++)
+for(j=0;j<gridColSize[0];j++)
+{
+    ans=fun(grid,gridSize,gridColSize,i,j);
+    if(max<ans)
+    max=ans;
+}
+return max;
+}
