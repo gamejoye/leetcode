@@ -450,3 +450,123 @@ int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes
     return ans;
 }
 
+//18.四数之和(中等)(排序+三重循环+双指针)
+int** fourSum(int* nums, int numsSize, int target, int* returnSize, int** returnColumnSizes) {
+    int** ans = (int**)malloc(sizeof(int*)*numsSize*numsSize);
+    *returnColumnSizes = (int *)malloc(sizeof(int) * numsSize * numsSize);
+    *returnSize=0;
+    long long sum;
+    int i,j,k,l,count,min;
+    for(i=0; i<numsSize; i++)
+    {
+        min=INT_MAX;
+        for(j=i; j<numsSize; j++)
+        {
+            if(nums[j]<=min)
+            {
+                min=nums[j];
+                k=j;
+            }
+        }
+        count=nums[i];
+        nums[i]=min;
+        nums[k]=count;
+    }
+    for(i=0; i<numsSize-3; i++)
+    {
+        for(j=i+1; j<numsSize-2;)
+        {
+            for(k=j+1,l=numsSize-1; k<l;)
+            {
+                long long sum=(long long)nums[i]+(long long)nums[j]+(long long)nums[k]+(long long)nums[l];
+                if(sum==target)
+                {
+                    ans[*returnSize] = (int*)malloc(sizeof(int)*4);
+                    (*returnColumnSizes)[*returnSize] = 4;
+                    ans[*returnSize][0] = nums[k];
+                    ans[*returnSize][1] = nums[i];
+                    ans[*returnSize][2] = nums[j];
+                    ans[*returnSize][3] = nums[l];
+                    *returnSize += 1;
+                    for(;; k++)
+                    {
+                        if(k+2>=numsSize||nums[k]!=nums[k+1])
+                        {
+                            k++;
+                            break;
+                        }
+                    }
+                }
+                else if(sum<target)
+                    k++;
+                else
+                    l--;
+            }
+            for(;; j++)
+            {
+                if(j+3>=numsSize||nums[j]!=nums[j+1])
+                {
+                    j++;
+                    break;
+                }
+            }
+        }
+        for(;; i++)
+        {
+            if(i+4>=numsSize||nums[i]!=nums[i+1])
+                break;
+        }
+    }
+    return ans;
+}
+
+
+//1014.最佳观光组合(中等)(动态规划)
+int maxScoreSightseeingPair(int* values, int valuesSize){
+int i,max=values[0],dp;
+dp=max;
+for(i=1;i<valuesSize;i++)
+{
+    dp=fmax(dp,max+values[i]-i);
+    max=fmax(max,values[i]+i);
+}
+return dp;
+}
+
+//122.股票
+(动态规划)
+int maxProfit(int* prices, int pricesSize) {
+    int dp[pricesSize][2];
+    dp[0][0] = 0, dp[0][1] = -prices[0];
+    //dp[i][0]代表手里没有股票
+    //dp[i][1]代表手里有股票
+    for (int i = 1; i < pricesSize; ++i) {
+        dp[i][0] = fmax(dp[i - 1][0], dp[i - 1][1] + prices[i]);//手里没有股票可能因为前一天没有股票或者在今天卖出
+        dp[i][1] = fmax(dp[i - 1][1], dp[i - 1][0] - prices[i]);//手里有股票可能因为前一天又股票或者在今天买入
+    }
+    return dp[pricesSize - 1][0];
+}
+(贪心)
+int maxProfit(int* prices, int pricesSize){
+int i,j,sum=0,min=prices[0],dp;
+for(i=1;i<pricesSize;i++)
+{
+    if(prices[i]<=min)
+    {
+        min=prices[i];
+        continue;
+    }
+    if(prices[i]>min&&(i+1==pricesSize||prices[i+1]<prices[i]))
+    {
+        sum=sum+prices[i]-min;
+        if(i+1<pricesSize)
+        min=prices[i+1];
+        continue;
+    }
+    if(prices[i]>min&&(i+1<pricesSize&&prices[i+1]>prices[i]))
+    {
+        continue;
+    }
+}
+return sum;
+}
