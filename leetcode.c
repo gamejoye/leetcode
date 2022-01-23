@@ -571,6 +571,35 @@ for(i=1;i<pricesSize;i++)
 return sum;
 }
 
+//714.股票含手续费
+int maxProfit(int* prices, int pricesSize, int fee){
+int dp[pricesSize][2];
+dp[0][0] = 0, dp[0][1] = -prices[0];
+//dp[i][0]代表手里没有股票
+//dp[i][1]代表手里有股票
+for (int i = 1; i < pricesSize; ++i)
+{
+dp[i][0] = fmax(dp[i - 1][0], dp[i - 1][1] + prices[i]-fee);
+dp[i][1] = fmax(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+}
+return dp[pricesSize - 1][0];
+}
+
+//309.股票含冷冻期(中等)
+int maxProfit(int* prices, int pricesSize){
+int i,j,dp[pricesSize][3];
+dp[0][0]=-prices[0];//手里有股票
+dp[0][1]=0;//手里没有股票且不处于冷冻期
+dp[0][2]=0;//手里没有股票且处于冷冻期
+for(i=1;i<pricesSize;i++)
+{
+    dp[i][0]=fmax(dp[i-1][0],dp[i-1][1]-prices[i]);
+    dp[i][1]=fmax(dp[i-1][2],dp[i-1][1]);
+    dp[i][2]=dp[i-1][0]+prices[i];
+}
+return fmax(dp[i-1][1],dp[i-1][2]);
+}
+
 //695.岛屿的最大面积(搜索深度遍历dfs)
 //第一次做这种题
 int fun(int** grid, int gridSize, int* gridColSize,int i,int j){
