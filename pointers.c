@@ -163,3 +163,26 @@ for(j=numsSize-1;j>numsSize-1-count;j--)
 nums[j]=0;
 return nums;
 }
+
+//1910.删除特定的字符串(多看多看，指针yyds)
+char * removeOccurrences(char * s, char * part){
+if(strstr(s,part)==NULL)
+return s;
+int i,j,k;
+int lenth=strlen(part);
+char * res;
+while(1)
+{
+    j=0;
+    res=strstr(s,part);
+    if(res==NULL)
+    break;
+    while(res[j+lenth]!='\0')
+    {
+        res[j]=res[j+lenth];
+        j++;
+    }
+    res[j]='\0';
+}
+return s;
+}

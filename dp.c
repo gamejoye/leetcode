@@ -260,3 +260,22 @@ return max;
 else
 return fmax(max,total-min);
 }
+
+
+//42.接雨水(困难)  （实际上也就是求左右两边柱子的最小值）!!!!!!(力扣一整个爱住了)
+int trap(int* height, int heightSize){
+int i,j,leftmax[heightSize],rightmax[heightSize],sum=0,h;
+leftmax[0]=height[0];
+rightmax[heightSize-1]=height[heightSize-1];
+for(i=1;i<heightSize;i++)
+leftmax[i]=fmax(height[i-1],leftmax[i-1]);
+for(i=heightSize-2;i>=0;i--)
+rightmax[i]=fmax(height[i+1],rightmax[i+1]);
+for(i=1;i<heightSize-1;i++)
+{
+    h=fmin(rightmax[i],leftmax[i]);
+    if(h>height[i])
+    sum=sum+h-height[i];
+}
+return sum;
+}
