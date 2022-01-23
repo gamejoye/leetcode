@@ -151,18 +151,15 @@ return core;
 
 //289.移动零(简单)（我个人挺喜欢这个做法）
 void moveZeroes(int* nums, int numsSize){
-int i,j;
-for(i=0,j=numsSize-1;i<j;)
+int i,j,k,count=0;
+for(i=0;i<numsSize;i++)
 {
     if(nums[i]==0)
-    {
-        for(k=i;k<j;k++)
-        nums[k]=nums[k+1];
-        nums[j]=0;
-        j--;
-    }
+    count++;
     if(nums[i]!=0)
-    i++;
+    nums[i-count]=nums[i];
 }
+for(j=numsSize-1;j>numsSize-1-count;j--)
+nums[j]=0;
 return nums;
 }
