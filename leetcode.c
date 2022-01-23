@@ -623,3 +623,24 @@ for(j=0;j<gridColSize[0];j++)
 }
 return max;
 }
+
+//611.三角形个数(中等)          !!!!!!!!!!!!!!!!!
+int comp(const void *a,const void *b)
+{
+    return *(int *)a - *(int *)b;
+}
+int triangleNumber(int* nums, int numsSize){
+int i,j,k,count=0,d=0,core=0,min;
+qsort(nums,numsSize,sizeof(nums[0]),comp);
+for(i=0;i<numsSize-2;i++)
+{
+k=i+2;
+for(j=i+1;j<numsSize-1&&nums[i]!=0;j++)
+{
+    while(k<numsSize&&nums[i]+nums[j]>nums[k])
+    k++;
+    core=core+k-j-1;
+}
+}
+return core;
+}
