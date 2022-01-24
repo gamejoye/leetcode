@@ -280,31 +280,7 @@ for(i=1;i<heightSize-1;i++)
 return sum;
 }
 
-
-//139.单词拆分（中等）（唉，还是更努力需要学习）
-//dp[i]==0;说明长度为(0~i)的单词未能匹配!!!
-bool wordBreak(char * s, char ** wordDict, int wordDictSize){
-int lenth=strlen(s);
-int i,j,k,d;
-int dp[301]={0};
-dp[0]=1;
-for(i=0;i<=strlen(s);i++)
-{
-    for(j=0;j<wordDictSize;j++)
-    {
-        k=strlen(wordDict[j]);
-        d=i-k;
-        if(d<0)
-        continue;
-        dp[i]=(dp[d]&&strncmp(s+d,wordDict[j],k)==NULL)||dp[i];
-    }
-}
-if(dp[lenth]==1)
-return true;
-return false;
-}
-
-//91.解码方法(中等)（看中间部分，开头是一些特殊情况）
+//91.解码方法(中等)（开头是一些特殊用例，重点在中间）
 int numDecodings(char * s){
 if(s[0]=='0')
 return 0;
