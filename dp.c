@@ -279,3 +279,71 @@ for(i=1;i<heightSize-1;i++)
 }
 return sum;
 }
+
+
+//139.单词拆分（中等）（唉，还是更努力需要学习）
+//dp[i]==0;说明长度为(0~i)的单词未能匹配!!!
+bool wordBreak(char * s, char ** wordDict, int wordDictSize){
+int lenth=strlen(s);
+int i,j,k,d;
+int dp[301]={0};
+dp[0]=1;
+for(i=0;i<=strlen(s);i++)
+{
+    for(j=0;j<wordDictSize;j++)
+    {
+        k=strlen(wordDict[j]);
+        d=i-k;
+        if(d<0)
+        continue;
+        dp[i]=(dp[d]&&strncmp(s+d,wordDict[j],k)==NULL)||dp[i];
+    }
+}
+if(dp[lenth]==1)
+return true;
+return false;
+}
+
+//91.解码方法(中等)（看中间部分，开头是一些特殊情况）
+int numDecodings(char * s){
+if(s[0]=='0')
+return 0;
+if(strlen(s)==1)
+return 1;
+if(s[0]>'2'&&s[1]=='0')
+return 0;
+int dp[101]={0},i;
+dp[0]=1;
+if((s[0]-48)*10+s[1]-48<=26&&s[1]!='0')
+dp[1]=2;
+else
+dp[1]=1;
+if(s[2]=='0'&&s[1]<='2')
+dp[1]=dp[0]=dp[2]=1;
+for(i=2;i<strlen(s);i++)
+{
+    if(s[i-1]=='0'&&s[i]=='0')
+    return 0;
+    if(s[i]!='0')
+    {
+    if(i==strlen(s)-1||s[i+1]!='0')
+    {
+        if((s[i-1]-48)*10+s[i]-48<=26&&s[i-1]!='0')
+        dp[i]=dp[i-1]+dp[i-2];
+        else
+        dp[i]=dp[i-1];
+    }
+    else
+    {
+        if(s[i]=='0'||s[i]-48>2)
+        return 0;
+        else
+        {
+            dp[i+1]=dp[i]=dp[i-1];
+            i++;
+        }
+    }
+    }
+}
+return dp[strlen(s)-1];
+}
