@@ -324,28 +324,3 @@ for(i=2;i<strlen(s);i++)
 return dp[strlen(s)-1];
 }
 
-//221.最大正方形(还是很骚的)
-class Solution {
-    public int maximalSquare(char[][] matrix) {
-        int m=matrix.length,n=matrix[0].length;
-        if(m==0||n==0)
-        return 0;
-        int i,j,max=0,tmp=0;
-        int[][] ans = new int [m][n];
-        for(i=0;i<m;i++)
-        {
-        for(j=0;j<n;j++)
-        {
-            if(matrix[i][j]=='1')
-            {
-            if(i==0||j==0)
-            ans[i][j]=1;
-            else
-            ans[i][j]=Math.min(Math.min(ans[i-1][j],ans[i][j-1]),ans[i-1][j-1])+1;
-            }
-            max=Math.max(ans[i][j],max);
-        }
-        }
-        return max*max;
-    }
-}
