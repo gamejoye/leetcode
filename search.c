@@ -51,3 +51,41 @@ int** highestPeak(int** isWater, int isWaterSize, int* isWaterColSize, int* retu
     memcpy(*returnColumnSizes, isWaterColSize, sizeof(int) * m);
     return ans;
 }
+
+//1219.黄金矿工(回溯)
+class Solution {
+    int ans=0,m,n;
+    int[][] dir={{1,0},{-1,0},{0,1},{0,-1}};
+    int[][] grid;
+    public int getMaximumGold(int[][] grid) {
+        int i,j;
+        this.grid = grid;
+        this.m=grid.length;
+        this.n=grid[0].length;
+        for(i=0;i<m;i++)
+        for(j=0;j<n;j++)
+        {
+            if(grid[i][j]!=0)
+            bfs(i,j,0);
+        }
+        return ans;
+    }
+    public void bfs(int x,int y,int glod){
+        int rec;
+        glod=glod+grid[x][y];
+        rec=grid[x][y];
+        grid[x][y]=0;
+        int i,px,py;
+        for(i=0;i<4;i++)
+        {
+            px=x+dir[i][0];
+            py=y+dir[i][1];
+            if(px>=0&&py>=0&&px<m&&py<n&&grid[px][py]!=0)
+            {
+                bfs(px,py,glod);
+            }
+        }
+        grid[x][y]=rec;
+        ans=Math.max(ans,glod);
+    }
+}
