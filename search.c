@@ -89,3 +89,24 @@ class Solution {
         ans=Math.max(ans,glod);
     }
 }
+
+//494.目标和(回溯法)
+class Solution {
+    int count=0;
+    public void bfs (int[] nums, int target, int index, int sum)
+    {
+        if(index==nums.length){
+            if(sum==target){
+                count++;
+            }
+        }
+        else{
+        bfs(nums, target, index+1,  sum+nums[index]);
+        bfs(nums, target, index+1,  sum-nums[index]);
+        }
+    }
+    public int findTargetSumWays(int[] nums, int target) {
+        bfs(nums, target, 0, 0);
+        return count;
+    }
+}
