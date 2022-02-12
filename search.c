@@ -110,3 +110,47 @@ class Solution {
         return count;
     }
 }
+
+//1020.飞地的数量（自己的思路，无参考）
+class Solution {
+    int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+    int[][] grid;
+    public int numEnclaves(int[][] grid) {
+        this.grid = grid;
+        int count=0;
+        for(int i=0; i<grid[0].length; i++){
+            if(this.grid[0][i]==1){
+                bfs(0,i);
+            }
+            if(this.grid[grid.length-1][i]==1){
+                bfs(grid.length-1,i);
+            }
+        }
+        for(int j=0; j<grid.length; j++){
+            if(this.grid[j][0]==1){
+                bfs(j,0);
+            }
+            if(this.grid[j][grid[0].length-1]==1){
+                bfs(j,grid[0].length-1);
+            }
+        }
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(this.grid[i][j]==1)
+                count++;
+            }
+        }
+        return count;
+    }
+    public void bfs(int x,int y){
+        grid[x][y]=0;
+        int px,py;
+        for(int i=0;i<4;i++){
+            px=x+dir[i][0];
+            py=y+dir[i][1];
+            if(px>=0&&px<grid.length&&py>=0&&py<grid[0].length&&grid[px][py]==1){
+                bfs(px,py);
+            }
+        }
+    }
+}
